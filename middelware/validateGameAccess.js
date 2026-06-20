@@ -75,7 +75,7 @@ export const validateGameAccess = async (req, res, next) => {
 
      const requestDomain = req.headers["x-domain"];
 
-     console.log("requestDomain",requestDomain);
+    //  console.log("requestDomain",requestDomain);
      
 
       if (!user.domain) {
@@ -92,27 +92,32 @@ export const validateGameAccess = async (req, res, next) => {
         });
       }
 
+      // console.log("Domain validation passed", requestDomain);
+
         /* ===============================
           3️⃣ IP VALIDATION
         ================================ */
         const requestIp = getClientIp(req);
 
-        console.log("requestIp11",requestIp);
+        // console.log("requestIp11",requestIp);
         
-  
+      if (requestDomain !== "api-docs.space") {
+
         if (!user.ipv4_address) {
           return res.status(403).json({
             status: false,
-            message: `Your IP address is ${[requestIp]}, Access has been banned by the system, please contact the administrator to add a whitelist!`,
+            message: `Your IP address is ${requestIp}, Access has been banned by the system, please contact the administrator to add a whitelist!`,
           });
         }
 
-       if (!validateIp(user.ipv4_address, requestIp)) {
+        if (!validateIp(user.ipv4_address, requestIp)) {
           return res.status(403).json({
-            status:false,
-            message:`Your IP address ${requestIp} is not whitelisted`
+            status: false,
+            message: `Your IP address ${requestIp} is not whitelisted`,
           });
         }
+     }
+
 
     /* ===============================
        4️⃣ PROVIDER ACCESS

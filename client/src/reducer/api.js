@@ -21,8 +21,8 @@ export const api = axios.create({
 // // const AP// Request interceptor to add headers
 api.interceptors.request.use((config) => {
   // Add domain header
-  config.headers['x-domain'] = window.location.hostname;
-  // config.headers['x-domain'] = 'api-docs.space';
+  // config.headers['x-domain'] = window.location.hostname;
+  config.headers['x-domain'] = 'api-docs.space';
   
   // Add internal request header to bypass IP validation for docs
   config.headers['x-internal-request'] = 'true';
