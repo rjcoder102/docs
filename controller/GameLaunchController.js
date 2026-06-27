@@ -227,7 +227,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
       req.headers["x-forwarded-for"]?.split(",")[0] ||
       req.socket.remoteAddress;
 
-      // console.log("requestIp",requestIp);
+      console.log("requestIp",requestIp);
       
 
     // const allowedIpv4 =
