@@ -179,8 +179,8 @@ export const getLaunchUrlSeamless = async (req, res) => {
     const callback_url = "https://api-docs.space/api/huidu/seamless-callback";
 
     const proxy = {
-      host: "31.58.16.70",
-      port: 6037,
+      host: "154.6.83.203",
+      port: 6674,
       auth: {
         username: "trqjnemy",
         password: "34pw1x8rcxr3",
@@ -188,7 +188,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
     };
 
     const proxyAgent = new HttpsProxyAgent(
-  "http://trqjnemy:34pw1x8rcxr3@31.58.16.70:6037"
+  "http://trqjnemy:34pw1x8rcxr3@154.6.83.203:6674"
 );
 
     /* ================= USER ================= */
