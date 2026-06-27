@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
             type: String, 
             required: true 
         },
-         by: { 
+        by: { 
         type: String, 
         default:"zapcore"
         },
