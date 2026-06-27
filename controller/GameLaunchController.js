@@ -236,7 +236,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
     const allowedIpv4 = (user.ipv4_address || []).map(ip => ip.trim());
 
     if (allowedIpv4.length && !allowedIpv4.includes(requestIp)) {
-      throw new Error("Unauthorized request origin");
+      throw new Error("Unauthorized request origin11");
     }
 
     /* ================= USERNAME BUILD ================= */
