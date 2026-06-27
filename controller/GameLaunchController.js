@@ -356,9 +356,18 @@ export const getLaunchUrlSeamless = async (req, res) => {
 
     let response = await launchGame(activeUsername, subuser.balance);
 
-    // console.log("response",response);
+    console.log("response",response);
     
 
+    /* ---------- SUCCESS ---------- */
+    if (response.data?.code === 10017 || response.data?.payload === "" || !response.data?.payload?.game_launch_url) {
+      await session.commitTransaction();
+      return res.json({
+        status: false,
+        message: "Game is not available",
+        data: response.data,
+      });
+    }
     /* ---------- SUCCESS ---------- */
     if (response.data?.payload?.game_launch_url) {
       await session.commitTransaction();
@@ -374,7 +383,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
       response.data?.code === 10024 &&
       !subuser.istransferred &&
       !tryMigrate
-    ) {
+     ) {
       tryMigrate = true;
 
       // STEP 1: GET BALANCE
@@ -443,7 +452,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
       // RETRY WITH SEAMLESS USER
       response = await launchGame(seamlessUsername, fund_balance);
 
-      // console.log("response",response);
+      console.log("response",response);
       
 
       if (response.data?.payload?.game_launch_url) {
@@ -456,7 +465,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
       }
     }
 
-    throw new Error("Failed to get game launch URL");
+    // throw new Error("Failed to get game launch URL");
 
   } catch (error) {
     await session.abortTransaction();
@@ -478,6 +487,8 @@ export const getUserBalanceLocal = async (req, res) => {
     /* ================= VALIDATION ================= */
     const { key, playerid } = req.body;
 
+    console.log("key playerid", key, playerid);
+
     if (!key || !playerid) {
       return res.status(422).json({
         status: false,
@@ -488,6 +499,7 @@ export const getUserBalanceLocal = async (req, res) => {
     /* ================= USER ================= */
     const user = await User.findOne({ key });
     if (!user) {
+
       return res.status(408).json({
         status: false,
         message: "User not found",
@@ -504,35 +516,28 @@ export const getUserBalanceLocal = async (req, res) => {
     // const allowedIpv6 =
     //   user.ipv6_address?.split(",").map(ip => ip.trim()) || [];
 
+    console.log("allowedIpv4", allowedIpv4);
+  
     let ipAllowed = false;
 
     // IPv6 check (first 4 blocks prefix match)
-    if (requestIp.includes(":")) {
-      const reqPrefix = requestIp
-        .toLowerCase()
-        .split(":")
-        .slice(0, 4)
-        .join(":");
+    // if (requestIp.includes(":")) {
+    //   const reqPrefix = requestIp
+    //     .toLowerCase()
+    //     .split(":")
+    //     .slice(0, 4)
+    //     .join(":");
 
-      // for (const ipv6 of allowedIpv6) {
-      //   if (
-      //     ipv6
-      //       .toLowerCase()
-      //       .split(":")
-      //       .slice(0, 4)
-      //       .join(":") === reqPrefix
-      //   ) {
-      //     ipAllowed = true;
-      //     break;
-      //   }
-      // }
-    } 
-    // IPv4 check
-    else {
+    // } 
+    //   // 
+    // // IPv4 check
+    // else {
       if (allowedIpv4.includes(requestIp)) {
         ipAllowed = true;
       }
-    }
+    // }
+
+    // console.log("requestIp", requestIp);
 
     if (!ipAllowed) {
       return res.status(403).json({
@@ -1267,7 +1272,7 @@ export const handleBetLossGGR = async (req = null, res = null) => {
 
   } catch (error) {
 
-    console.error("Loss GGR Error:", error);
+    // console.error("Loss GGR Error:", error);
 
     if (res) {
 
@@ -1298,10 +1303,10 @@ export const updatePendingBetStus = async (req=null, res=null) => {
       }
     );
 
-    console.log("result",result);
+    // console.log("result",result);
     
 
-    console.log(`✅ Updated ${result.modifiedCount} records`);
+    // console.log(`✅ Updated ${result.modifiedCount} records`);
   } catch (error) {
     console.error("❌ Cron error:", error.message);
   }

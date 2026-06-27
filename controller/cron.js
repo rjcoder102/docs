@@ -6,7 +6,7 @@ export const cronJobGame1p = () => {
   // Run every minute
   cron.schedule("*/1 * * * *", async () => {
 
-    console.log("cron runnn")
+    // console.log("cron runnn")
 
     try {
 

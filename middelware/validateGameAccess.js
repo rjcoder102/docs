@@ -173,15 +173,15 @@ export const lunchGameValidate = async (req, res, next) => {
     /* ===============================
        1️⃣ KEY CHECK
     ================================ */
-    const { key } = req.query;
+    const { key,playerid } = req.query;
 
-    // console.log("key",key);
+    console.log("key11",key);
     
 
     if (!key) {
       return res.status(400).json({
         status: false,
-        message: "Key is required",
+        message: "Key is required1111",
       });
     }
 
