@@ -356,7 +356,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
 
     let response = await launchGame(activeUsername, subuser.balance);
 
-    console.log("response",response);
+    // console.log("response",response);
     
 
     /* ---------- SUCCESS ---------- */
@@ -452,7 +452,7 @@ export const getLaunchUrlSeamless = async (req, res) => {
       // RETRY WITH SEAMLESS USER
       response = await launchGame(seamlessUsername, fund_balance);
 
-      console.log("response",response);
+      // console.log("response",response);
       
 
       if (response.data?.payload?.game_launch_url) {
